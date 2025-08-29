@@ -12,6 +12,15 @@ usuarios = [
     {"id": 2, "nombre": "María", "email": "maria@ejemplo.com"},
     {"id": 3, "nombre": "Carlos", "email": "carlos@ejemplo.com"}
 ]
+"""
+---------Conectarlo a la base de datos sql server-------------------------
+import pyodbc
+conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=tcp:servidor-sql.database.windows.net,1433;Database=mydatabase;Uid=myusername;Pwd=mypassword;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;')
+cursor = conn.cursor()
+cursor.execute("SELECT * FROM usuarios")
+usuarios = cursor.fetchall()
+conn.close()
+"""
 
 # Ruta principal - GET
 @app.route('/', methods=['GET'])
@@ -135,9 +144,9 @@ def error_servidor(error):
 
 # Ejecutar la aplicación
 if __name__ == '__main__':
-    print("🚀 Iniciando API...")
-    print("📡 Servidor disponible en: http://localhost:5000")
-    print("📖 Documentación de endpoints:")
+    print("Iniciando API...")
+    print("Servidor disponible en: http://localhost:5000")
+    print("Documentación de endpoints:")
     print("   GET  / - Información de la API")
     print("   GET  /usuarios - Obtener todos los usuarios")
     print("   GET  /usuarios/<id> - Obtener usuario por ID")
@@ -145,8 +154,7 @@ if __name__ == '__main__':
     print("   PUT  /usuarios/<id> - Actualizar usuario")
     print("   DELETE /usuarios/<id> - Eliminar usuario")
     print("   GET  /buscar?nombre=<nombre> - Buscar usuarios por nombre")
-    print("\n💡 Ejemplos de uso:")
+    print("\n Ejemplos de uso:")
     print("   curl http://localhost:5000/usuarios")
     print("   curl -X POST http://localhost:5000/usuarios -H 'Content-Type: application/json' -d '{\"nombre\":\"Ana\",\"email\":\"ana@ejemplo.com\"}'")
-    
     app.run(debug=True, host='0.0.0.0', port=5000)
